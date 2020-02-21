@@ -1,18 +1,9 @@
 <?php
-$username="root";
-$password="";
-$host="localhost";
-$database="admin";
-  
-   $con=mysqli_connect("$host","$username","$password") or die("Server Error");
-mysql_select_db("$database") or die("Database error");
-
-if($con==true)
-{
-    echo "Success";
+$db= mysqli_connect("localhost","root","","admin");
+if(mysqli_error($db)) {
+	echo "failed";
 }
-else
-{
-    mysql_close($con);
+else{
+	echo "";
 }
-?>
+  ?>

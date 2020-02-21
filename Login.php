@@ -1,29 +1,24 @@
 <?php
    include("config.php");
    session_start();
-   
+
    if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form 
+ 
+     $username = mysqli_real_escape_string($db,$_POST['email']);
+     $password = mysqli_real_escape_string($db,$_POST['password']); 
       
-      $myusername = mysqli_real_escape_string($db,$_POST['username']);
-      $myemail = mysqli_real_escape_string($db,$_POST['email']); 
-      $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
-      
-      $sql = "SELECT * FROM user WHERE name = '$myusername' and password = '$mypassword'";
-
+      $sql = "SELECT * FROM users WHERE email = '$username' and password = '$password'";
       $result = mysqli_query($db,$sql);
-      echo "$result";
-
-      // $row = mysqli_fetch_array($db,$result);
-      // $active = $row['active'];
+      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+     // $active = $row['active'];
       
-      // $count = mysqli_num_rows($result);
+      $count = mysqli_num_rows($result);
       
       // If result matched $myusername and $mypassword, table row must be 1 row
-        
+      
       if($count == 1) {
-         session_register("myusername");
-         $_SESSION['login_user'] = $myusername;
+        //session_register("username");
+         $_SESSION['login_user'] = $username;
          
          header("location: welcome.php");
       }else {
@@ -35,7 +30,7 @@
 <html>
 
 <head>
-    <title>Sign-Up</title>
+    <title>Login</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="./Images/cow_icon.ico" />
@@ -59,10 +54,10 @@
     }
 
     @media only screen and (max-width: 768px) {
-  #imh{
-    display: none;
-  }
-}
+        #imh {
+            display: none;
+        }
+    }
     </style>
 </head>
 
@@ -71,32 +66,36 @@
         <div class="row">
             <div class="col-md-5" style="padding-right:10%;">
                 <h2 style="text-align: center;">Login</h2>
-                <form action = "" method = "post">
-                        <div class="form-group col-xs-4">
+                <form action="" method="post">
+                    <!-- <div class="form-group col-xs-4">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Name" name = "username"">
-                        </div> 
+                            <input type="text" class="form-control" id="name" placeholder="Name" name="firstname">
+                        </div> -->
                     <div class="form-group col-xs-4">
                         <label for="email">Email Address</label>
-                        <input type="email" class="form-control" id="email" placeholder="name@domain.com" name="email">
+                        <input type="email" class="form-control" id="email" placeholder="name@domain.com" name="email" />
                     </div>
                     <div class="form-group">
                         <label for="pwd">Password</label>
-                        <input id="password-field" type="password" class="form-control pwd" placeholder="Enter your password" name = "password">
+                        <input id="password-field" type="password" class="form-control pwd" placeholder="Enter your password" name="password" />
                         <span toggle="#password-field" class="fa fa-fw fa-eye-slash field-icon toggle-password kl"></span>
                     </div>
-                    <button type="submit" class="btn btn-primary rounded" style="width: 100%;">Sign-Up</button>
+                    <br>
+                    <button type="submit" class="btn btn-primary rounded" name="submit" value=" Submit " style="width: 100%;" />Login</button>
+                    <!-- <div class="alert alert-danger" role="alert">
+
+</div> -->
                 </form>
-                <div style="text-align:center;color:#989898;">
+                <!-- <div style="text-align:center;color:#989898;">
                     Already have an account?<a href="#"><span style="color:#808080;">Log in</span></a>
-                </div>
-                <div>
+                </div> -->
+                <!--  <div>
                     <br>
                     <a class="btn btn-outline-dark justify-content-center   " href="#" role="button" style="text-transform:none;width: 100%;">
                         <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
                         Login with Google
                     </a>
-                </div>
+                </div> -->
             </div>
             <div class="col-md-7" style="padding-left: 10%;">
                 <img src="./Images/capture.png" class="img-fluid" id=imh>

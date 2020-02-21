@@ -16,7 +16,8 @@ if (isset($_POST['submit']))
 {
 
     $email = $_POST['email'];
-    $password = md5($_POST['password']);
+    // $password = md5($_POST['password']);
+    $password = $_POST['password'];
     $sql = "INSERT INTO users (email,password)
    VALUES ('$email','$password')";
 
