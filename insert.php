@@ -10,7 +10,6 @@ if ($conn->connect_error)
 {
     die("Connection failed: " . $conn->connect_error);
 }
-echo "success";
 
 if (isset($_POST['submit']))
 {
@@ -23,7 +22,7 @@ if (isset($_POST['submit']))
 
     if (mysqli_query($conn, $sql))
     {
-        echo "New record created successfully !";
+        echo "<h2>"."New record created successfully !"."</h2>";
     }
     else
     {
